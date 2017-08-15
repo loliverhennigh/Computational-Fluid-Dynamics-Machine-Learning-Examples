@@ -8,7 +8,7 @@ from Queue import Queue
 from threading import Thread
 
 # Que up simulations to run
-simulation_queue = Queue(20)
+simulation_queue = Queue(8)
 def worker():
   while True:
     [sim_cmd, rm_cmd] = simulation_queue.get()
@@ -21,13 +21,13 @@ def worker():
       simulation_queue.task_done()
 
 # make thread
-for i in xrange(4):
+for i in xrange(10):
   t = Thread(target=worker)
   t.daemon = True
   t.start()
  
 # number of simulations
-num_runs = 300
+num_runs = 3000
 
 # create xml file and run simulation
 for i in tqdm(xrange(num_runs)):
