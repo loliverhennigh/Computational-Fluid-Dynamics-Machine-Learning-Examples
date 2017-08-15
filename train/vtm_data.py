@@ -56,8 +56,9 @@ class VTK_data:
       np_array = vtk_to_numpy(array_data)
       img_shape = img_data.GetWholeExtent()
       np_shape = [img_shape[3] - img_shape[2] + 1, img_shape[1] - img_shape[0] + 1, 1]
-      np_array = np_array.reshape(np_shape)
-      self.geometries.append(np_array)
+      geometry_array = np_array.reshape(np_shape)
+      if np.isnan(geometry_array).any():
+        continue
 
       # read file for steady state flow
       reader = vtk.vtkXMLMultiBlockDataReader()
@@ -77,17 +78,24 @@ class VTK_data:
       pressure_np_shape = [img_shape[3] - img_shape[2] + 1, img_shape[1] - img_shape[0] + 1, 1]
       velocity_np_array = velocity_np_array.reshape(velocity_np_shape)
       pressure_np_array = pressure_np_array.reshape(pressure_np_shape)
-      np_array = np.concatenate([velocity_np_array, pressure_np_array], axis=2)
-      self.steady_flows.append(np_array)
+      steady_flow_array = np.concatenate([velocity_np_array, pressure_np_array], axis=2)
+      if np.isnan(steady_flow_array).any():
+        continue
 
       # read file for drag vector
       reader = open(drag_vector_file, "r")
       drag_values = reader.readlines()
-      np_array = np.zeros((len(drag_values)))
+      drag_array = np.zeros((len(drag_values)))
       for i in xrange(len(drag_values)):
         values = drag_values[i].split(' ')
-        np_array[i] = float(values[1])
-      self.drag_vectors.append(np_array)
+        drag_array[i] = float(values[1])
+      if np.isnan(drag_array).any():
+        continue
+
+      # if no nans then store
+      self.geometries.append(geometry_array)
+      self.steady_flows.append(steady_flow_array)
+      self.drag_vectors.append(drag_array)
 
     self.split_line = int(self.train_test_split * len(self.geometries))
 
