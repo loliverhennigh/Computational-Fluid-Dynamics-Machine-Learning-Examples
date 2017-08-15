@@ -24,7 +24,7 @@ batch_size = 32
 epochs = 100 # number of times through training set
 
 # load dataset
-dataset = VTK_data("./xml_runs")
+dataset = VTK_data("../data")
 dataset.load_data()
 
 # get train and test split
@@ -78,7 +78,7 @@ up8 = concatenate([ZeroPadding2D(((0,0),(1,0)))(Conv2DTranspose(64, (2, 2), stri
 conv8 = Conv2D(64, (3, 3), activation='relu', padding='same')(up8)
 conv8 = Conv2D(64, (3, 3), activation='relu', padding='same')(conv8)
 
-up9 = concatenate([ZeroPadding2D(((1,0),(1,0)))(Conv2DTranspose(32, (2, 2), strides=(2, 2), padding='same')(conv8)), conv1], axis=3)
+up9 = concatenate([ZeroPadding2D(((0,0),(1,0)))(Conv2DTranspose(32, (2, 2), strides=(2, 2), padding='same')(conv8)), conv1], axis=3)
 conv9 = Conv2D(32, (3, 3), activation='relu', padding='same')(up9)
 conv9 = Conv2D(32, (3, 3), activation='relu', padding='same')(conv9)
 

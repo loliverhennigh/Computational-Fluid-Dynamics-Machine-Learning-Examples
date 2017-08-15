@@ -25,7 +25,7 @@
 ###########################################################################
 ## DEFINITIONS TO BE CHANGED
 
-ROOT            := ../..
+ROOT            := ../olb-1.1r0
 SRC             :=
 OUTPUT          := cylinder2d
 

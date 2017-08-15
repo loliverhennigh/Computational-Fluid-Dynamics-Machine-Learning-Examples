@@ -25,7 +25,7 @@ class VTK_data:
     # reads in all xml data into lists
 
     # get list of all xml file in dataset
-    xml_files = glob.glob(self.base_dir + "/*")  
+    xml_files = glob.glob(self.base_dir + "/xml_runs/*.xml")
 
     for f in xml_files:
 
@@ -36,7 +36,11 @@ class VTK_data:
      
       # get needed filenames
       geometry_file = dir_name + "vtkData/geometry_iT0000000.vtm"
-      steady_flow_file = glob.glob(dir_name + "/vtkData/data/*.vtm")[0]
+      steady_flow_file = glob.glob(dir_name + "/vtkData/data/*.vtm")
+      if len(steady_flow_file) == 0:
+        continue
+      else:
+        steady_flow_file = steady_flow_file[0]
       drag_vector_file = dir_name + "gnuplotData/data/drag.dat"
       
       # read file for geometry

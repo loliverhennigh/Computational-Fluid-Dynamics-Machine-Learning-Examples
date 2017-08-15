@@ -58,13 +58,9 @@ typedef double T;
 
 
 // Parameters for the simulation setup
-const int N = 1;        // resolution of the model
-const int M = 1;        // time discretization refinement
-const T Re = 50.;       // Reynolds number
 const T maxPhysT = 50.; // max. simulation time in s, SI unit
-const T L = 0.01/N;     // latticeL
 const T lengthX = 2.2;
-const T lengthY = .41+L;
+const T lengthY = .411;
 
 const T interval = 5.0; // Time intervall in seconds for convergence check
 const T epsilon = 1e-3; // Residuum for convergence check
@@ -88,12 +84,12 @@ void prepareGeometry( LBconverter<T> const& converter,
   superGeometry.rename( 2,1,1,1 );
 
   // Set material number for inflow
-  extend[0] = 2.*L;
-  origin[0] = -L;
+  extend[0] = 2.*0.01;
+  origin[0] = -0.01;
   IndicatorCuboid2D<T> inflow( extend, origin );
   superGeometry.rename( 2,3,1,inflow );
   // Set material number for outflow
-  origin[0] = lengthX-L;
+  origin[0] = lengthX-0.01;
   IndicatorCuboid2D<T> outflow( extend, origin );
   superGeometry.rename( 2,4,1,outflow );
   // Set material number for cylinder
@@ -194,7 +190,7 @@ void setBoundaryValues( SuperLattice2D<T, DESCRIPTOR>& sLattice,
     T frac[1] = {};
     StartScale( frac,iTvec );
     T maxVelocity = converter.getLatticeU()*3./2.*frac[0];
-    T distance2Wall = L/2.;
+    T distance2Wall = 0.005;
     Poiseuille2D<T> poiseuilleU( superGeometry, 3, maxVelocity, distance2Wall );
 
     sLattice.defineU( superGeometry, 3, poiseuilleU );
@@ -334,11 +330,11 @@ int main( int argc, char* argv[] ) {
 
   LBconverter<T> converter(
     ( int ) 2,                               // dim
-    ( T )   L,                             // latticeL_
-    ( T )   0.01/M,                        // latticeU_
-    ( T )   0.2*2.*radiusCylinder/Re,      // charNu_
-    ( T )   2*radiusCylinder,              // charL_ = 1
-    ( T )   0.2                            // charU_ = 1
+    ( T )   0.01,                            // latticeL_
+    ( T )   0.01,                            // latticeU_
+    ( T )   0.001,                           // charNu_
+    ( T )   0.1,                             // charL_ = 1
+    ( T )   0.2                              // charU_ = 1
   );
   converter.print();
   writeLogFile( converter, "cylinder2d" );
@@ -355,7 +351,7 @@ int main( int argc, char* argv[] ) {
 #else
   const int noOfCuboids = 1;
 #endif
-  CuboidGeometry2D<T> cuboidGeometry( cuboid, L, noOfCuboids );
+  CuboidGeometry2D<T> cuboidGeometry( cuboid, 0.01, noOfCuboids );
 
   // Instantiation of a loadBalancer
   HeuristicLoadBalancer<T> loadBalancer( cuboidGeometry );
