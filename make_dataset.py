@@ -6,9 +6,14 @@ from tqdm import *
 import subprocess
 from Queue import Queue
 from threading import Thread
+ 
+# number of simulations
+num_runs = 3000
+num_que  = 8
+
 
 # Que up simulations to run
-simulation_queue = Queue(8)
+simulation_queue = Queue(num_que)
 def worker():
   while True:
     [sim_cmd, rm_cmd] = simulation_queue.get()
@@ -25,10 +30,6 @@ for i in xrange(10):
   t = Thread(target=worker)
   t.daemon = True
   t.start()
- 
-# number of simulations
-num_runs = 3000
-
 # create xml file and run simulation
 for i in tqdm(xrange(num_runs)):
   # make random pos and radius for circle
