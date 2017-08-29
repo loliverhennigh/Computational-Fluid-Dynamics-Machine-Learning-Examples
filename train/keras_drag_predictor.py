@@ -72,7 +72,7 @@ out = Dense(1, activation='linear')(flat5_dropout)
 model = Model(inputs=[inputs], outputs=[out])
 
 model.compile(loss=keras.losses.mean_squared_error,
-              optimizer=keras.optimizers.Adam(lr=3e-5),
+              optimizer=keras.optimizers.Adam(lr=1e-4),
               metrics=['MSE'])
 
 # train model
@@ -82,7 +82,11 @@ model.fit(train_geometries, train_drag_vectors,
           verbose=1,
           validation_data=(test_geometries, test_drag_vectors))
 
-# eval model on test set
+# evaluate on test set
+score = model.evaluate(test_geometries, test_drag_vectors, verbose=0)
+print('Average Mean Squared Error:', score[0])
+
+# display predictions on test set
 predicted_drag_vectors = model.predict(test_geometries, batch_size=batch_size)
 for i in xrange(predicted_drag_vectors.shape[0]):
   # plot predicted vs true flow

@@ -8,7 +8,7 @@ from Queue import Queue
 from threading import Thread
  
 # number of simulations
-num_runs = 3000
+num_runs = 2000
 num_que  = 8
 
 

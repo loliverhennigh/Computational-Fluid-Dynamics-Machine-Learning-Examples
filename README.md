@@ -1,5 +1,5 @@
 # Computational-Fluid-Dynamics-Machine-Learning-Examples
-This repo contains some tutorial type programs showing some basic ways machine learning can be applied to CFD. The purpose of this is to give those who are familar with CFD but not Neural Networks a few very simple examples of applications. In particular, there is an e
+This repo contains tutorial type programs showing some basic ways machine learning can be applied to CFD. The purpose of this is to give those who are familar with CFD but not Neural Networks a few very simple examples of applications. In particular, there is an example for predicting drag from the boundary conditions. There is also an example showing how to predict the velocity and pressure field from the boundary conditions.
 
 The Neural Network code is written with the popular and easy to use [Keras](https://keras.io/) library. [OpenLB](http://optilb.org/openlb/) is used to generate the simulation data needed for training.
 
@@ -17,7 +17,7 @@ Note, if you want the gpu version of Tensorflow you need to install `tensorflow-
 
 # How To Generate Train Data
 
-This repo realize on OpenLB to generate the train and test set of simulation data. To setup the library run
+This repo relize on OpenLB to generate the train and test set of simulation data. To setup the library run
 ```
 ./setup_olb.sh
 ```
@@ -25,7 +25,7 @@ This will download and compile the simulator. Now to generate the train and test
 ```
 python make_dataset.py
 ```
-This program will generate 3,000 examples of steady state flow around a cylinder at various positions and radie. On a i7 processor it takes about 1 hour and 2 hours on an i5. Keep in mind that it is multithreaded and runs several simulations at the same time. If you notice your machines cpu is not maxed out you can adjust the `num_que` parameter to make it go faster. You can also change `num_runs` to change how many simulations to run. 
+This program will generate 2,000 examples of steady state flow around a cylinder at various positions and radie (simple as possible). On a i7 processor it takes about 1 hour and 2 hours on an i5. Keep in mind that it is multithreaded and runs several simulations at the same time. If you notice your machines cpu is not maxed out you can adjust the `num_que` parameter to make it go faster. You can also change `num_runs` to change how many simulations to run.
 
 # How To Train Networks
 
@@ -34,13 +34,18 @@ To train a network in predicting the steady state flow velocity vector field and
 ```
 keras_steady_flow_predictor.py
 ```
+For the drag predicting network run
+```
+keras_drag_predictor.py
+```
 
 # Results
 
+Running the steady state flow predictor produces images like these. 
 
 
 
 # Discussion
 
-
+If you found this code helpful or interesting and would like to see something specific
 

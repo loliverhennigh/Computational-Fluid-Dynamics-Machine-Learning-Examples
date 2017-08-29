@@ -97,7 +97,11 @@ model.fit(train_geometries, train_steady_flows,
           verbose=1,
           validation_data=(test_geometries, test_steady_flows))
 
-# eval model on test set
+# evaluate on test set
+score = model.evaluate(test_geometries, test_steady_flows, verbose=0)
+print('Average Mean Squared Error:', score[0])
+
+# display predictions on test set
 predicted_steady_flow = model.predict(test_geometries, batch_size=batch_size)
 for i in xrange(predicted_steady_flow.shape[0]):
   # plot predicted vs true flow
