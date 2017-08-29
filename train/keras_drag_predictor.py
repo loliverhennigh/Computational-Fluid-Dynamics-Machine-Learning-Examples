@@ -47,30 +47,42 @@ print(test_geometries.shape[0], ' test samples')
 
 # construct model
 inputs = Input(train_geometries.shape[1:])
+
+# 2 3x3 convolutions followed by a max pool
 conv1 = Conv2D(4, (3, 3), activation='relu', padding='same')(inputs)
 conv1 = Conv2D(4, (3, 3), activation='relu', padding='same')(conv1)
 pool1 = MaxPooling2D(pool_size=(2, 2))(conv1)
 
+# 2 3x3 convolutions followed by a max pool
 conv2 = Conv2D(8, (3, 3), activation='relu', padding='same')(pool1)
 conv2 = Conv2D(8, (3, 3), activation='relu', padding='same')(conv2)
 pool2 = MaxPooling2D(pool_size=(2, 2))(conv2)
 
+# 2 3x3 convolutions followed by a max pool
 conv3 = Conv2D(16, (3, 3), activation='relu', padding='same')(pool2)
 conv3 = Conv2D(16, (3, 3), activation='relu', padding='same')(conv3)
 pool3 = MaxPooling2D(pool_size=(2, 2))(conv3)
 
+# 2 3x3 convolutions followed by a max pool
 conv4 = Conv2D(64, (3, 3), activation='relu', padding='same')(pool3)
 conv4 = Conv2D(64, (3, 3), activation='relu', padding='same')(conv4)
 pool4 = MaxPooling2D(pool_size=(2, 2))(conv4)
 
+# flatten the 4D array (batch, height, width, depth) into 
+# a 2D array (batch, n). Perform a fully connected layer
 flat4 = Flatten()(conv4)
 flat5 = Dense(512, activation='relu')(flat4)
 
+# Dropout at 50% on this layer
 flat5_dropout = Dropout(0.5)(flat5)
+
+# One more layer to a single value (this will be the predicted drag)
 out = Dense(1, activation='linear')(flat5_dropout)
 
+# construct model
 model = Model(inputs=[inputs], outputs=[out])
 
+# compile the model with loss and optimizer
 model.compile(loss=keras.losses.mean_squared_error,
               optimizer=keras.optimizers.Adam(lr=1e-4),
               metrics=['MSE'])
