@@ -3,6 +3,12 @@ This repo contains tutorial type programs showing some basic ways machine learni
 
 The Neural Network code is written with the popular and easy to use [Keras](https://keras.io/) library. [OpenLB](http://optilb.org/openlb/) is used to generate the simulation data needed for training.
 
+Here are figures of the two networks to train.
+
+![alt tag](https://github.com/loliverhennigh/Computational-Fluid-Dynamics-Machine-Learning-Examples/blob/master/figs/drag-predictor-network.jpg)
+
+![alt tag](https://github.com/loliverhennigh/Computational-Fluid-Dynamics-Machine-Learning-Examples/blob/master/figs/steady-state-flow-predicting-networ.jpg)
+
 # Needed Install Stuff
 
 You will need the following packages to run all the code. Mpi stuff for OpenLB and Keras for the Neural Networks. Starting from a fresh image of Ubuntu 16 the following should meet all dependencies.
@@ -43,9 +49,32 @@ keras_drag_predictor.py
 
 Running the steady state flow predictor produces images like these. 
 
+![alt tag](https://github.com/loliverhennigh/Computational-Fluid-Dynamics-Machine-Learning-Examples/blob/master/figs/steady_state_flow_1.png)
+![alt tag](https://github.com/loliverhennigh/Computational-Fluid-Dynamics-Machine-Learning-Examples/blob/master/figs/steady_state_flow_2.png)
+![alt tag](https://github.com/loliverhennigh/Computational-Fluid-Dynamics-Machine-Learning-Examples/blob/master/figs/steady_state_flow_3.png)
+![alt tag](https://github.com/loliverhennigh/Computational-Fluid-Dynamics-Machine-Learning-Examples/blob/master/figs/steady_state_flow_4.png)
 
+Once trained, the drag predicting network has an average mean squared error of 0.72. Given the boundarys it is able to reasonable predict the drag. Here are 3 predictions for examples.
+
+![alt tag](https://github.com/loliverhennigh/Computational-Fluid-Dynamics-Machine-Learning-Examples/blob/master/figs/drag_1.png)
+
+true drag is     : [ 10.7171]
+predicted drag is: [ 10.45950699]
+
+
+![alt tag](https://github.com/loliverhennigh/Computational-Fluid-Dynamics-Machine-Learning-Examples/blob/master/figs/drag_2.png)
+
+true drag is     : [ 7.64211]
+predicted drag is: [ 6.81015682]
+
+![alt tag](https://github.com/loliverhennigh/Computational-Fluid-Dynamics-Machine-Learning-Examples/blob/master/figs/drag_3.png)
+
+true drag is     : [ 6.08601]
+predicted drag is: [ 5.85990286]
 
 # Discussion
 
-If you found this code helpful or interesting and would like to see something specific
+While there has been relatively little work applying Neural Networks to Computational Fluid Dynamics, it seems as though there are many interesting applications. 
+
+If you found this code helpful or interesting and would like to see somethig specific
 
