@@ -115,13 +115,15 @@ class VTK_data:
     return batch_boundary, batch_data
 
 """
-dataset = VTK_data("./xml_runs")
+batch_size = 5
+dataset = VTK_data("../data")
 dataset.load_data()
-batch_boundary, batch_data = dataset.minibatch(batch_type="flow")
-for i in xrange(32):
+batch_boundary, batch_data = dataset.minibatch(batch_size=batch_size, batch_type="flow")
+for i in xrange(batch_size):
   plt.imshow(batch_boundary[i][:,:,0])
   plt.show()
   plt.imshow(batch_data[i][:,:,0])
   #plt.plot(batch_data[i])
   plt.show()
-""" 
+
+"""
